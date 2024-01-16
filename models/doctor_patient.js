@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const organizationSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -9,24 +9,28 @@ const organizationSchema = new mongoose.Schema({
         type: String,
         recuired: true,
     },
-    region: {
+    role: {
         type: String,
         recuired: true,
     },
-    streetAddress: {
+    age: {
         type: String,
         recuired: true,
     },
-    regNo: {
-        type: String,
-        recuired: true,
-    },
-    profileImage: {
+    description : {
         type: String,
         recuired: false,
         default: "",
     },
-    description: {
+    address: {
+        type: String,
+        recuired: true,
+    },
+    phone: {
+        type: String,
+        recuired: true,
+    },
+    profileImage: {
         type: String,
         recuired: false,
         default: "",
@@ -38,6 +42,6 @@ const organizationSchema = new mongoose.Schema({
     
 });
 
-const Organization = mongoose.models.organization||
-        mongoose.model("organization", organizationSchema);
-export default Organization;
+const Users = mongoose.models.doctor_patient||
+        mongoose.model("doctor_patient", userSchema);
+export default Users;
