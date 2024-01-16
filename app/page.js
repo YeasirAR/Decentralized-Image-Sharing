@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <main>
       {flag? <Login /> : <Signup />}
-      <Sidebar />
     </main>
   )
 }
