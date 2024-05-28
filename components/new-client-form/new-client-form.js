@@ -5,7 +5,23 @@ import { useState } from "react";
 const NewClientForm = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageDetails, setImageDetails] = useState({ name: "", size: "" });
+  const [fdata,setFData] = useState({
+    name:"",
+    address:"",
+    email:"",
+    password:"",
+    age:"",
+    role:"",
+    phoneNumber:"",
+  });
+  const inputHandelar = (event) => {
+    e.prevent.default();
 
+    setFData({
+      ...fdata,
+      [event.target.name]: event.target.value,
+    })
+  }
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -38,8 +54,8 @@ const NewClientForm = () => {
             <div className="mt-1">
               <input
                 type="text"
-                name="first-name"
-                id="first-name"
+                name="name"
+                id="name"
                 autoComplete="given-name"
                 className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               />
@@ -163,8 +179,8 @@ const NewClientForm = () => {
             <div className="mt-1">
               <input
                 type="text"
-                name="phnone-number"
-                id="phnone-number"
+                name="phnoneNumber"
+                id="phnoneNumber"
                 autoComplete="phnone-number"
                 className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               />
