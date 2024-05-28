@@ -31,11 +31,11 @@ import {
 
 
 const navigation = [
-  { name: "User Profile", href: "/dashboard", icon: HomeIcon, current: true },
+  { name: "User Profile", href: "/dashboard", icon: HomeIcon, current: false },
   { name: "Add Clients", href: "/add-clients", icon: ArrowTrendingUpIcon, current: false },
   { name: "Upload Image", href: "/upload-image", icon: UserGroupIcon, current: false },
-  { name: "Share Image", href: "/share-image", icon: ChatBubbleBottomCenterTextIcon, current: false },
-  { name: "Transactions", href: "/trnsaction", icon: ChatBubbleBottomCenterTextIcon, current: false },
+  // { name: "Share Image", href: "/share-image", icon: ChatBubbleBottomCenterTextIcon, current: false },
+  { name: "Transactions", href: "/transactions", icon: ChatBubbleBottomCenterTextIcon, current: false },
 ];
 
 const communities = [
