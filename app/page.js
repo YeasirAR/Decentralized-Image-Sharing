@@ -4,7 +4,7 @@ import Signup from '../components/auth/signup'
 import Sidebar from '@/components/sidebar/sidebar'
 
 export default function Home() {
-  var flag = false;
+  var flag = true;
   return (
     <main>
       {flag? <Login /> : <Signup />}

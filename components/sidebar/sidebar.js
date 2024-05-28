@@ -31,7 +31,7 @@ import {
 
 
 const navigation = [
-  { name: "User Profile", href: "#", icon: HomeIcon, current: true },
+  { name: "User Profile", href: "/dashboard", icon: HomeIcon, current: true },
   { name: "Add Clients", href: "/add-clients", icon: ArrowTrendingUpIcon, current: false },
   { name: "Upload Image", href: "/upload-image", icon: UserGroupIcon, current: false },
   { name: "Share Image", href: "/share-image", icon: ChatBubbleBottomCenterTextIcon, current: false },

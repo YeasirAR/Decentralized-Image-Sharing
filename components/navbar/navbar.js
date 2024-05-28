@@ -9,7 +9,7 @@ const user = {
   name: 'Chelsea Hagon',
   email: 'chelsea.hagon@example.com',
   imageUrl:
-    'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    'https://miro.medium.com/v2/resize:fit:2400/1*edHEjIkFn5YuPODO7wKOYw.png',
 }
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -130,12 +130,11 @@ const NavBar = () => {
                           </Menu.Items>
                         </Transition>
                       </Menu>
-    
                       <a
-                        href="#"
+                        href="/upload-image"
                         className="ml-6 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
-                        New Project
+                        Upload Image
                       </a>
                     </div>
                   </div>

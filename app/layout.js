@@ -11,11 +11,11 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  var flag = true;
   return (
     <>
-      <Navbar />
-      <Sidebar children={children} />
-      
+    {flag?<Navbar /> : <> </>}
+    {flag?<Sidebar children={children} /> : <>{children} </>}
     </>
   )
 }
