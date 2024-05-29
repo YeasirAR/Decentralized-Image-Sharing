@@ -3,19 +3,36 @@ import { Inter } from 'next/font/google';
 import AddImageForm from '@/components/add-image-form/add-image-form';
 import NewClientForm from '@/components/new-client-form/new-client-form';
 import {
+  ChatBubbleLeftEllipsisIcon,
+  CodeBracketIcon,
+  EllipsisVerticalIcon,
+  EyeIcon,
+  FlagIcon,
+  HandThumbUpIcon,
+  MagnifyingGlassIcon,
+  PlusIcon,
+  ShareIcon,
+  StarIcon,
+} from "@heroicons/react/20/solid";
+import {
   ArrowTrendingUpIcon,
+  Bars3Icon,
+  BellIcon,
+  FireIcon,
   HomeIcon,
   UserGroupIcon,
+  XMarkIcon,
+  InformationCircleIcon,
   ChatBubbleBottomCenterTextIcon,
-} from '@heroicons/react/24/outline';
+} from "@heroicons/react/24/outline";
 
 const navigation = [
   { name: "User Profile", href: "/dashboard", icon: HomeIcon, current: false },
   { name: "Add Clients", href: "/add-clients", icon: ArrowTrendingUpIcon, current: false },
   { name: "Upload Image", href: "/upload-image", icon: UserGroupIcon, current: false },
-  { name: "Share Image", href: "/share-image", icon: ChatBubbleBottomCenterTextIcon, current: false },
-  { name: "My Image", href: "/my-image", icon: ChatBubbleBottomCenterTextIcon, current: false },
-  { name: 'Transactions', href: '/transactions', icon: ChatBubbleBottomCenterTextIcon, current: false },
+  { name: "Share Image", href: "/share-image", icon: UserGroupIcon, current: false },
+  { name: "My Image", href: "/my-image", icon: InformationCircleIcon, current: false },
+  { name: 'Transactions', href: '/transactions', icon: Bars3Icon, current: false },
 ];
 
 
