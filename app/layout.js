@@ -11,10 +11,11 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const showSidebar = false; 
+  const showSidebar = true; 
 
   return (
-    <>
+    <html>
+    <body>
       {showSidebar && <Navbar />}
       {showSidebar ? (
         <Sidebar>
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
       ) : (
         children 
       )}
-    </>
+    </body>
+    </html>
   );
 }
