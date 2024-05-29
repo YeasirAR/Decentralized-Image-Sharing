@@ -22,7 +22,8 @@ export default function Login() {
     console.log(data);
     if(res.status === 200) {
       // alert(data.message);
-      localStorage.setItem("loggedInUser", JSON.stringify(data));
+      console.log(data);
+      // localStorage.setItem("loggedInUser", JSON.stringify(data));
       window.location.href = "/";
     } else {
       alert(data.message);
