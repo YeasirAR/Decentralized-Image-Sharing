@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { withSession } from "@/database/session";
 
 export async function POST(request) {
-  const {email, password } = await request.json();
+  const {email, password} = await request.json();
   await connectMongoDB();
   const existingUser = await OrgrSchema.findOne({email});
   console.log(existingUser);
