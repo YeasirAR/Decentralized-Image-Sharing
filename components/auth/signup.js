@@ -31,7 +31,7 @@ export default function Signup() {
     console.log(data);
     if(res.status === 200) {
       alert("Account created successfully");
-      window.location.href = "/auth/login";
+      window.location.href = "/home";
     } else {
       alert(data.message);
     }
@@ -105,8 +105,8 @@ export default function Signup() {
                   </label>
                   <div className="mt-1">
                     <input
-                      id="street-address"
-                      name="street-address"
+                      id="street_address"
+                      name="street_address"
                       type="street-address"
                       autoComplete="street-address"
                       required
@@ -120,8 +120,8 @@ export default function Signup() {
                   </label>
                   <div className="mt-1">
                     <input
-                      id="reg-no"
-                      name="reg-no"
+                      id="reg_no"
+                      name="reg_no"
                       type="reg-no"
                       autoComplete="reg-no"
                       required
@@ -141,7 +141,7 @@ export default function Signup() {
                       autoComplete="current-password"
                       required
                       className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                    />
+                    /> 
                   </div>
                 </div>
                 <div>
