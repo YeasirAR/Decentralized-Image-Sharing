@@ -4,10 +4,6 @@ import React, { useState } from "react";
 const NewClientForm = () => {
   const [profilePic, setProfilePic] = useState(null);
 
-  const testButton = () => {
-    console.log("test button clicked");
-    alert("test button clicked");
-  }
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent form from submitting
     console.log("submitting");
@@ -24,7 +20,32 @@ const NewClientForm = () => {
     );
     const file = await res_img.json();
     console.log(file.secure_url);
-    alert("Image uploaded successfully" + file.secure_url);
+    // alert("Image uploaded successfully" + file.secure_url);
+    const res = await fetch("/api/auth/signup/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },  
+      body: JSON.stringify({
+        name: event.target.name.value,
+        email: event.target.email.value,
+        password: event.target.password.value,
+        address: event.target.address.value,
+        age: event.target.age.value,
+        role: event.target.Role.value,
+        phone_number: event.target.phnoneNumber.value,
+        description: event.target.description.value,
+        profile_image: file.secure_url || "",
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+    if(res.status === 200) {
+      alert("Account created successfully");
+      window.location.href = "/home";
+    } else {
+      alert(data.message);
+    }
   }
 
   return (
@@ -32,12 +53,11 @@ const NewClientForm = () => {
       <h2 className="text-center font-bold text-2xl">Add New Client</h2>
       <br />
       <hr />
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={testButton}/>
       <form onSubmit={handleSubmit}> 
         <div className="container w-2/4 mx-auto">
           <div className="sm:col-span-3">
             <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
-              First name
+              Full name
             </label>
             <div className="mt-1">
               <input
@@ -158,7 +178,7 @@ const NewClientForm = () => {
             Upload profile image
           </label>
           <input
-            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="file"
             id="profilePic"
             onChange={(event) => setProfilePic(event.target.files[0])}
