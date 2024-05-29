@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         recuired: true,
     },
-    profileImage: {
+    profile_image: {
         type: String,
         recuired: false,
         default: "",

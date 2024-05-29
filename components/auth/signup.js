@@ -12,16 +12,19 @@ export default function Signup() {
       alert("Password and confirm password does not match");
       return;
     }
-    const res = await fetch("/api/auth/signup", {
+    const res = await fetch("/api/auth/signup/org", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },  
       body: JSON.stringify({
         name: e.target.name.value,
-        username: e.target.username.value,
         email: e.target.email.value,
+        country: e.target.country.value,
+        street_address: e.target.street_address.value,
+        reg_no: e.target.reg_no.value,
         password: e.target.password.value,
+        description: e.target.description.value,
       }),
     });
     const data = await res.json();
@@ -156,7 +159,20 @@ export default function Signup() {
                     />
                   </div>
                 </div>
-  
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+                    Organization Description
+                  </label>
+                  <div className="mt-1">
+                    <textarea
+                      id="description"
+                      name="description"
+                      rows="3"
+                      required
+                      className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    ></textarea>
+                  </div>
+                </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <input
