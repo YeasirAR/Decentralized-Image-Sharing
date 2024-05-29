@@ -14,8 +14,13 @@ export default function RootLayout({ children }) {
   var flag = true;
   return (
     <>
-    {flag?<Navbar /> : <> </>}
-    {flag?<Sidebar children={children} /> : <>{children} </>}
+    <html>
+      <body>
+      {flag?<Navbar /> : <> </>}
+      {flag?<Sidebar children={children} /> : <>{children} </>}
+      </body>
+    </html>
+
     </>
   )
 }
