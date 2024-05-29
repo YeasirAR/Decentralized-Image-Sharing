@@ -1,54 +1,42 @@
-"use client";
-import React, { useEffect } from "react";
-import { useState } from "react";
+'use client'
+import React, { useState } from "react";
 
 const NewClientForm = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [imageDetails, setImageDetails] = useState({ name: "", size: "" });
-  const [fdata,setFData] = useState({
-    name:"",
-    address:"",
-    email:"",
-    password:"",
-    age:"",
-    role:"",
-    phoneNumber:"",
-  });
-  const inputHandelar = (event) => {
-    e.prevent.default();
+  const [profilePic, setProfilePic] = useState(null);
 
-    setFData({
-      ...fdata,
-      [event.target.name]: event.target.value,
-    })
+  const testButton = () => {
+    console.log("test button clicked");
+    alert("test button clicked");
   }
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedFile(URL.createObjectURL(file));
-      setImageDetails({
-        name: file.name,
-        size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
-      });
-    }
-  };
-  useEffect(() => {
-    document.title = "Add New Client";
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent form from submitting
+    console.log("submitting");
+    const data_img = new FormData();
+    data_img.append("file", profilePic);
+    data_img.append("upload_preset", "ac0fxlck");
+    data_img.append("cloud_name", "duhwlswgx");
+    const res_img = await fetch(
+      "https://api.cloudinary.com/v1_1/duhwlswgx/image/upload",
+      {
+        method: "POST",
+        body: data_img,
+      }
+    );
+    const file = await res_img.json();
+    console.log(file.secure_url);
+    alert("Image uploaded successfully" + file.secure_url);
   }
-    , [selectedFile, imageDetails]);
+
   return (
-    <>
-      <div className="container mx-auto">
-        <h2 className="text-center font-bold text-2xl">Add New Client</h2>{" "}
-        <br />
-        <hr />
+    <div className="container mx-auto">
+      <h2 className="text-center font-bold text-2xl">Add New Client</h2>
+      <br />
+      <hr />
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={testButton}/>
+      <form onSubmit={handleSubmit}> 
         <div className="container w-2/4 mx-auto">
-          {/* client full name start */}
           <div className="sm:col-span-3">
-            <label
-              htmlFor="first-name"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
               First name
             </label>
             <div className="mt-1">
@@ -61,34 +49,8 @@ const NewClientForm = () => {
               />
             </div>
           </div>
-          {/* client full name end */}
-
-          {/* Address Section Start */}
           <div className="sm:col-span-3">
-            <label
-              htmlFor="first-name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Address
-            </label>
-            <div className="mt-1">
-              <input
-                type="text"
-                name="address"
-                id="address"
-                autoComplete="address"
-                className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div>
-          {/* Address Section end */}
-
-          {/* email section start */}
-          <div className="sm:col-span-3">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email address
             </label>
             <div className="mt-1">
@@ -102,14 +64,8 @@ const NewClientForm = () => {
               />
             </div>
           </div>
-          {/* email section end */}
-
-          {/* password section start */}
           <div className="sm:col-span-3">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
             </label>
             <div className="mt-1">
@@ -123,16 +79,24 @@ const NewClientForm = () => {
               />
             </div>
           </div>
-          {/* password section end */}
-
-          {/* Age and Role section start */}
+          <div className="sm:col-span-3">
+            <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
+              Address
+            </label>
+            <div className="mt-1">
+              <input
+                type="text"
+                name="address"
+                id="address"
+                autoComplete="address"
+                className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="...">
               <div className="sm:col-span-3">
-                <label
-                  htmlFor="age"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="age" className="block text-sm font-medium text-gray-700">
                   Age:
                 </label>
                 <div className="mt-1">
@@ -148,10 +112,7 @@ const NewClientForm = () => {
             </div>
             <div className="...">
               <div>
-                <label
-                  htmlFor="role"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="role" className="block text-sm font-medium text-gray-700">
                   Role
                 </label>
                 <select
@@ -166,15 +127,9 @@ const NewClientForm = () => {
               </div>
             </div>
           </div>
-          {/* Age and Role section end */}
-
-          {/* phone Number Section Start */}
           <div className="sm:col-span-3">
-            <label
-              htmlFor="phnone-number"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Address
+            <label htmlFor="phnone-number" className="block text-sm font-medium text-gray-700">
+              Phone Number
             </label>
             <div className="mt-1">
               <input
@@ -186,83 +141,28 @@ const NewClientForm = () => {
               />
             </div>
           </div>
-          {/* phone Number Section end */}
-
-          {/* upload image start */}
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="user_avatar">Upload file</label>
-                <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file"/>
-                <div className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">A profile picture is useful to confirm your are logged into your account</div>
-          {/* <div className="sm:col-span-6">
-            <label
-              htmlFor="cover-photo"
-              className="block text-lg font-medium text-gray-700"
-            >
-              Upload Image:
+          <div className="sm:col-span-3">
+            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+              Description
             </label>
-            <div className="mt-1 w-1/2 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6 mx-auto">
-              <div className="space-y-1 text-center">
-                <div className="flex text-sm text-gray-600">
-                  <label
-                    htmlFor="file-upload"
-                    className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
-                  >
-                    <span>Upload a file</span>
-                    <input
-                      id="file-upload"
-                      name="file-upload"
-                      type="file"
-                      className="sr-only"
-                      onChange={handleFileChange}
-                    />
-                  </label>
-                  <p className="pl-1">or drag and drop</p>
-                </div>
-                <p className="text-xs text-gray-500">
-                  PNG, JPG, GIF up to 10MB
-                </p>
-                <svg
-                  className="mx-auto h-12 w-12 text-gray-400"
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 48 48"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
+            <div className="mt-1">
+              <textarea
+                id="description"
+                name="description"
+                rows="3"
+                className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              ></textarea>
             </div>
-          </div> */}
-          {/* upload image end */}
-
-          {/* about image start */}
-          <div className="sm:col-span-6 w-2/4 mt-4">
-            {selectedFile && (
-              <div>
-                <h3 className="block text-sm font-medium text-gray-700">
-                  Image Details:
-                </h3>
-                <img
-                  src={selectedFile}
-                  alt="Uploaded Preview"
-                  className="mt-2 rounded-md"
-                />
-                <p className="mt-2 text-sm text-gray-600">
-                  Name: {imageDetails.name}
-                </p>
-                <p className="text-sm text-gray-600">
-                  Size: {imageDetails.size}
-                </p>
-              </div>
-            )}
           </div>
-          {/* about image end */}
-
-          {/* Submit section start */}
+          <label className="block mb-2 text-sm font-medium text-gray-700" htmlFor="user_avatar">
+            Upload profile image
+          </label>
+          <input
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            type="file"
+            id="profilePic"
+            onChange={(event) => setProfilePic(event.target.files[0])}
+          />
           <div className="pt-5">
             <div className="flex justify-center">
               <button
@@ -279,10 +179,9 @@ const NewClientForm = () => {
               </button>
             </div>
           </div>
-          {/* Submit section end */}
         </div>
-      </div>
-    </>
+      </form>
+    </div>
   );
 };
 

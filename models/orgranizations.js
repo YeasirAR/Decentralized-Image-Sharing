@@ -9,19 +9,19 @@ const organizationSchema = new mongoose.Schema({
         type: String,
         recuired: true,
     },
-    region: {
+    country: {
         type: String,
         recuired: true,
     },
-    streetAddress: {
+    street_address: {
         type: String,
         recuired: true,
     },
-    regNo: {
+    reg_no: {
         type: String,
         recuired: true,
     },
-    profileImage: {
+    profile_image: {
         type: String,
         recuired: false,
         default: "",

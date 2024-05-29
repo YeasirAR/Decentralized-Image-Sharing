@@ -4,11 +4,11 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 
 export async function POST(request) {
-  const { name, email, region, streetAddress, regNo, password } =
+  const { name, email, country, street_address, reg_no, password,description } =
     await request.json();
   await connectMongoDB();
   const existingUser = await OrgrSchema.findOne({
-    $or: [{ email }, { regNo }],
+    $or: [{ email }, { reg_no }],
   });
 
   if (existingUser) {
@@ -18,10 +18,11 @@ export async function POST(request) {
   const newUser = new OrgrSchema({
     name,
     email,
-    region,
-    streetAddress,
-    regNo,
-    password: await bcrypt.hash(password, 12),
+    country,
+    street_address,
+    reg_no,
+    description,
+    password: await bcrypt.hash(password, 10)
   });
   await newUser.save();
   return NextResponse.json({ message: "Account created successfully" }, { status: 201 });
