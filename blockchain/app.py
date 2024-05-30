@@ -2,8 +2,10 @@ from flask import Flask, request, jsonify
 from cryptography.fernet import Fernet
 from blockchain import Blockchain
 from smartcontract import SmartContract
+from flask_cors import CORS  
 
 app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 encryption = Fernet(Fernet.generate_key())
 
 blockchain = Blockchain()
@@ -49,7 +51,8 @@ def getAllBlockInfo():
             'timestamp': block.timestamp,
             'previous_hash': block.previous_hash,
             'owner_org': block.owner_org,
-            'clients': block.clients
+            'clients': block.clients,
+            'hash': block.hash
         }
         for block in blockchain.chain
     ]
