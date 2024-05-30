@@ -21,10 +21,8 @@ export default function Login() {
     const data = await res.json();
     console.log(data);
     if(res.status === 200) {
-      // alert(data.message);
+      window.location.href = "/dashboard";
       console.log(data);
-      // localStorage.setItem("loggedInUser", JSON.stringify(data));
-      window.location.href = "/";
     } else {
       alert(data.message);
     }

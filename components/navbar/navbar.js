@@ -18,8 +18,6 @@ const navigation = [
   { name: 'Directory', href: '#', current: false },
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
   { name: 'Sign out', href: '#' },
 ]
 
@@ -27,6 +25,26 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 const NavBar = () => {
+
+  const logout = async () => {
+    const res = await fetch("/api/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },  
+      body: JSON.stringify({
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+    if(res.status === 200) {
+      // alert(data.message);
+      console.log(data);
+      window.location.href = "/auth/login";
+    } else {
+      alert(data.message);
+    }
+  };
     return (
         <>
           <Popover
@@ -115,15 +133,16 @@ const NavBar = () => {
                             {userNavigation.map((item) => (
                               <Menu.Item key={item.name}>
                                 {({ active }) => (
-                                  <a
-                                    href={item.href}
+                                  <button
+                                    // href={item.href}
+                                    onClick={logout}
                                     className={classNames(
                                       active ? 'bg-gray-100' : '',
                                       'block py-2 px-4 text-sm text-gray-700'
                                     )}
                                   >
                                     {item.name}
-                                  </a>
+                                  </button>
                                 )}
                               </Menu.Item>
                             ))}
@@ -175,13 +194,13 @@ const NavBar = () => {
                     </div>
                     <div className="mx-auto mt-3 max-w-3xl space-y-1 px-2 sm:px-4">
                       {userNavigation.map((item) => (
-                        <a
+                        <button
                           key={item.name}
-                          href={item.href}
+                          onClick={logout}
                           className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
                         >
                           {item.name}
-                        </a>
+                        </button>
                       ))}
                     </div>
                   </div>
