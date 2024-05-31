@@ -4,10 +4,11 @@ import { Fragment } from 'react'
 import { Menu, Popover, Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
 
 const user = {
-  name: 'Chelsea Hagon',
-  email: 'chelsea.hagon@example.com',
+  name: '',
+  email: '',
   imageUrl:
     'https://miro.medium.com/v2/resize:fit:2400/1*edHEjIkFn5YuPODO7wKOYw.png',
 }
@@ -24,7 +25,8 @@ const userNavigation = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-const NavBar = () => {
+const NavBar = (props) => {
+  const {name, email, profile_image, role} = props;
 
   const logout = async () => {
     const res = await fetch("/api/auth/logout", {
@@ -65,7 +67,7 @@ const NavBar = () => {
                         <a href="#">
                           <img
                             className="block h-8 w-auto"
-                            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                            src="https://miro.medium.com/v2/resize:fit:2400/1*edHEjIkFn5YuPODO7wKOYw.png"
                             alt="Your Company"
                           />
                         </a>
@@ -117,7 +119,13 @@ const NavBar = () => {
                         <div>
                           <Menu.Button className="flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             <span className="sr-only">Open user menu</span>
-                            <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
+                            <Image
+                              className="h-8 w-8 rounded-full"
+                              src={profile_image}
+                              alt=""
+                              height={1000}
+                              width={1000}
+                            />
                           </Menu.Button>
                         </div>
                         <Transition
@@ -150,10 +158,10 @@ const NavBar = () => {
                         </Transition>
                       </Menu>
                       <a
-                        href="/upload-image"
+                        href={role==="org"?"/upload-image":"/share-image"}
                         className="ml-6 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
-                        Upload Image
+                        {role==="org"?"Upload Image":"Share Image"}
                       </a>
                     </div>
                   </div>
@@ -178,11 +186,17 @@ const NavBar = () => {
                   <div className="border-t border-gray-200 pt-4 pb-3">
                     <div className="mx-auto flex max-w-3xl items-center px-4 sm:px-6">
                       <div className="flex-shrink-0">
-                        <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
+                      <Image
+                              className="h-8 w-8 rounded-full"
+                              src={profile_image}
+                              alt=""
+                              height={1000}
+                              width={1000}
+                            />
                       </div>
                       <div className="ml-3">
-                        <div className="text-base font-medium text-gray-800">{user.name}</div>
-                        <div className="text-sm font-medium text-gray-500">{user.email}</div>
+                        <div className="text-base font-medium text-gray-800">{name}</div>
+                        <div className="text-sm font-medium text-gray-500">{email}</div>
                       </div>
                       <button
                         type="button"

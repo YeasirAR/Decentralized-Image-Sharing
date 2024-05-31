@@ -5,7 +5,7 @@ const NewClientForm = () => {
   const [profilePic, setProfilePic] = useState(null);
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent form from submitting
+    event.preventDefault(); 
     console.log("submitting");
     const data_img = new FormData();
     data_img.append("file", profilePic);
@@ -42,7 +42,7 @@ const NewClientForm = () => {
     console.log(data);
     if(res.status === 200) {
       alert("Account created successfully");
-      window.location.href = "/home";
+      window.location.href = "/dashboard";
     } else {
       alert(data.message);
     }

@@ -25,25 +25,55 @@ import {
   InformationCircleIcon,
   ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/outline";
-
-const navigation = [
-  { name: "User Profile", href: "/dashboard", icon: HomeIcon, current: false },
-  { name: "Edit Profile", href: "/edit-profile", icon: HomeIcon, current: false },
-  { name: "Add Clients", href: "/add-clients", icon: ArrowTrendingUpIcon, current: false },
-  { name: "Upload Image", href: "/upload-image", icon: UserGroupIcon, current: false },
-  { name: "Share Image", href: "/share-image", icon: UserGroupIcon, current: false },
-  { name: "My Image", href: "/my-image", icon: InformationCircleIcon, current: false },
-  { name: 'Transactions', href: '/transactions', icon: Bars3Icon, current: false },
-];
-
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import jwt from "jsonwebtoken";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 const inter = Inter({ subsets: ['latin'] });
-
 const SideNav = ({ children }) => {
+  const cookieStore = cookies();
+  const token = cookieStore.get("token")?.value;
+
+  let decodedToken = null;
+  if (token) {
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (error) {
+      console.error("Invalid or expired token:", error);
+        // return redirect('/auth/login');
+    }
+  }
+
+  if (!decodedToken) {
+    // return redirect('/auth/login');
+  }
+  const role = decodedToken?.role;
+const navigation = [
+];
+if (role === "org") {
+  navigation.push(
+    { name: "User Profile", href: "/dashboard", icon: HomeIcon, current: false },
+    { name: "Edit Profile", href: "/edit-profile", icon: HomeIcon, current: false },
+    { name: "Add Clients", href: "/add-clients", icon: ArrowTrendingUpIcon, current: false },
+    { name: "Upload Image", href: "/upload-image", icon: UserGroupIcon, current: false },
+    { name: "Shared Images", href: "/share-image", icon: UserGroupIcon, current: false },
+    { name: "My Images", href: "/my-image", icon: InformationCircleIcon, current: false },
+    { name: 'Transactions', href: '/transactions', icon: Bars3Icon, current: false },
+  );
+}
+else {
+  navigation.push(
+    { name: "User Profile", href: "/dashboard", icon: HomeIcon, current: false },
+    { name: "Edit Profile", href: "/edit-profile", icon: ArrowTrendingUpIcon, current: false },
+    { name: "Shared Image", href: "/share-image", icon: UserGroupIcon, current: false },
+    { name: 'Transactions', href: '/transactions', icon: Bars3Icon, current: false },
+  );
+}
+
   return (
     <div className="min-h-full">
       <div className="py-10">

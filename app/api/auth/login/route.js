@@ -1,21 +1,27 @@
 import connectMongoDB from "@/database/connect";
 import OrgrSchema from "@/models/orgranizations";
+import UserSchema from "@/models/doctor_patient";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { sign } from "jsonwebtoken"; 
 
 export async function POST(request) {
   try {
-    const { email, password } = await request.json();
+    const { email, password,loginType } = await request.json();
     await connectMongoDB();
-
-    const existingUser = await OrgrSchema.findOne({ email });
-
+    const existingUser = await (async () => {
+      if (loginType === "organization") {
+        return OrgrSchema.findOne({ email });
+      } else if (loginType === "user") {
+        return  UserSchema.findOne({ email });
+      }
+    })();
+    console.log(loginType)
     if (!existingUser || !(await bcrypt.compare(password, existingUser.password))) {
       return NextResponse.json({ message: "Invalid Credentials" }, { status: 401 });
     }
 
-    const token = sign({ userId: existingUser._id, email: existingUser.email, profile_image: existingUser.profile_image, role:existingUser.role }, process.env.JWT_SECRET, {
+    const token = sign({ userId: existingUser._id, name: existingUser.name,email: existingUser.email, profile_image: existingUser.profile_image, role:existingUser.role }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 

@@ -1,18 +1,19 @@
 "use client";
 import { set } from "mongoose";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 
-function ProfileEdit() {
+function ProfileEditUser() {
   const [displayName, setDisplayName] = useState("");
   const [location, setLocation] = useState("");
   const [email, setEmail] = useState("");
+  const [age, setAge] = useState("");
   const [password, setPassword] = useState("");
   const [new_password, setNew_password] = useState("");
   const [about, setAbout] = useState("");
   const [profilePic, setProfilePic] = useState(null);
   useEffect(() => {
     const load_data = async () => {
-      const res = await fetch("/api/find_org", {
+      const res = await fetch("/api/find_user", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -24,8 +25,9 @@ function ProfileEdit() {
         const data = await res.json();
         console.log(data);
         setDisplayName(data.data.name);
-        setLocation(data.data.street_address);
+        setLocation(data.data.address);
         setEmail(data.data.email);
+        setAge(data.data.age);
         setAbout(data.data.description);
         setProfilePic(data.data.profile_image);
       } else {
@@ -51,9 +53,9 @@ function ProfileEdit() {
     );
     const file = await res_img.json();
     console.log(file.secure_url);
-    const imageUrl = file.secure_url || "";
+    const imageUrl = file.secure_url || profilePic;
 
-    const res = await fetch("/api/update/org", {
+    const res = await fetch("/api/update/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +63,8 @@ function ProfileEdit() {
       body: JSON.stringify({
         name: displayName,
         email: email,
-        street_address: location,
+        age:age,
+        address: location,
         password: password,
         description: about,
         profile_image: imageUrl,
@@ -94,6 +97,22 @@ function ProfileEdit() {
             id="displayName"
             value={displayName}
             onChange={(event) => setDisplayName(event.target.value)}
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            htmlFor="age"
+            className="block text-gray-700 font-bold mb-2"
+          >
+            Age
+          </label>
+          <input
+            required
+            type="text"
+            id="age"
+            value={age}
+            onChange={(event) => setAge(event.target.value)}
             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
@@ -146,8 +165,8 @@ function ProfileEdit() {
             Email
           </label>
           <input
-            type="email"
             disabled
+            type="email"
             id="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
@@ -196,4 +215,4 @@ function ProfileEdit() {
   );
 }
 
-export default ProfileEdit;
+export default ProfileEditUser;

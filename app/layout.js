@@ -35,19 +35,26 @@ export default function RootLayout({ children }) {
     showSidebar = false;
     // return redirect('/auth/login');
   }
-
+  // console.log('decodedToken', decodedToken);
   return (
     <html>
-    <body>
-      {showNavbar && <Navbar />}
-      {showSidebar ? (
-        <Sidebar>
-          {children}
-        </Sidebar>
-      ) : (
-        children 
-      )}
-    </body>
+      <body>
+        {showNavbar && (
+          <Navbar
+            name={decodedToken?.name || ''}
+            email={decodedToken?.email || ''}
+            profile_image={decodedToken?.profile_image || ''}
+            role={decodedToken?.role || ''}
+          />
+        )}
+        {showSidebar ? (
+          <Sidebar>
+            {children}
+          </Sidebar>
+        ) : (
+          children
+        )}
+      </body>
     </html>
   );
 }

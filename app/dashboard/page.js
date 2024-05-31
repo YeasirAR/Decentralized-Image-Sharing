@@ -3,6 +3,7 @@ import React from 'react';
 import Sidebar from '@/components/sidebar/sidebar';
 import Navbar from '@/components/navbar/navbar';
 import OrgProfile from '@/components/org-profile/org-profile';
+import UserProfile from '@/components/user-profile/user-profile';
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import jwt from "jsonwebtoken";
@@ -11,6 +12,7 @@ export default function Dashboard() {
   const token = cookieStore.get("token")?.value;
 
   let decodedToken = null;
+  let role = null;
   if (token) {
     try {
       decodedToken = jwt.verify(token, process.env.JWT_SECRET);
@@ -23,9 +25,10 @@ export default function Dashboard() {
   if (!decodedToken) {
     return redirect('/auth/login');
   }
+  role = decodedToken.role;
   return (
     <>
-    <OrgProfile />
+      {role === "org" ? <OrgProfile /> : <UserProfile />}
     </>
   )
 }

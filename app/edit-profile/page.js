@@ -1,4 +1,5 @@
 import EditProfile from "@/components/edit-profile/edit-profile";
+import EditProfileUser from "@/components/edit-profile-user/edit-profile-user";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import jwt from "jsonwebtoken";
@@ -6,7 +7,7 @@ import jwt from "jsonwebtoken";
 const EditProfilePage = () =>{
     const cookieStore = cookies();
     const token = cookieStore.get("token")?.value;
-  
+    let role = null;
     let decodedToken = null;
     if (token) {
       try {
@@ -20,9 +21,10 @@ const EditProfilePage = () =>{
     if (!decodedToken) {
       return redirect('/auth/login');
     }
+    role = decodedToken.role;
     return(
         <>
-            <EditProfile />
+            {role === "org" ? <EditProfile /> : <EditProfileUser />}
         </>
     )
 };

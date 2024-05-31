@@ -6,6 +6,7 @@ const UploadImageForm = (props) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [clientId, setClientId] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const ngrokUrl = process.env.NGROK;
 
     const handleFileChange = (e) => {
         setSelectedFile(e.target.files[0]);
@@ -28,7 +29,8 @@ const UploadImageForm = (props) => {
         formData.append('file', selectedFile);
 
         try {
-            const response = await fetch('https://e84d-34-168-222-190.ngrok-free.app/get_fm_en_ipfs', {
+            // const response = await fetch(`${ngrokUrl}/get_fm_en_ipfs`, {
+            const response = await fetch(`https://35cd-35-185-215-255.ngrok-free.app/get_fm_en_ipfs`, {
                 method: 'POST',
                 body: formData,
                 headers: {}
@@ -65,32 +67,28 @@ const UploadImageForm = (props) => {
                 }
                 const resData = await res.json();
                 console.log('Success:', resData);
-                alert('Block created successfully');
                 try {
-                    const response = await fetch(
-                      "/api/update/org_count",
-                      {
-                        method: "POST",
-                        body: {
-                            "email":user_email,
-                            
-                        },
-                        headers: {},
-                      }
-                    );
-            
-                    if (!response.ok) {
-                      throw new Error("Network response was not ok");
+                    const res = await fetch('/api/update/org_count', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            email: user_email
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    if (!res.ok) {
+                        throw new Error('Network response was not ok');
                     }
-            
-                    const data = await response.json();
-                    console.log("Success:", data);
-                    alert("File uploaded successfully");
-                  } catch (error) {
-                    console.error("Error:", error);
-
-                  }
-            
+                    const resData = await res.json();
+                    console.log('Success:', resData); 
+                
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error: ' + error.message);
+                }
+                alert('Block created successfully');  
+                
             } catch (error) {
                 console.error('Error:', error);
                 alert('Error: ' + error.message);
