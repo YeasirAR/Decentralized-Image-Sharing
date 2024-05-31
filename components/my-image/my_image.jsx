@@ -34,11 +34,11 @@ const MyImage = ({ user_email }) => {
     fetchClientBlocks();
   }, [user_email]);
 
-  const showImage = async (blockId, ipfs_hash, encryption_key) => {
+  const showImage = async (blockId, ipfs_hash, encryption_key, feature_map) => {
     const startTime = new Date();
     setLoadingBlockId(blockId);
     try {
-      const res = await fetch("https://7592-35-185-215-255.ngrok-free.app/get_decrypted_image", {
+      const res = await fetch("https://116a-35-221-244-230.ngrok-free.app/get_decrypted_image", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +94,7 @@ const MyImage = ({ user_email }) => {
           </div>
           <div className="flex justify-between items-center">
             <button
-              onClick={() => showImage(block.block_id, block.ipfs_hash, block.encryption_key)}
+              onClick={() => showImage(block.block_id, block.ipfs_hash, block.encryption_key, block.feature_map)}
               className="px-4 py-2 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-white text-sm font-medium rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
             >
               View Image

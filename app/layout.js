@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken";
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Decentralized Image Sharing',
+  title: 'DMIS - Decentralized Medical Image Sharing',
   description: 'A decentralized image sharing app with Blockchain and IPFS',
 };
 

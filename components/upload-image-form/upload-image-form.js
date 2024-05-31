@@ -31,7 +31,7 @@ const UploadImageForm = (props) => {
 
         try {
             // const response = await fetch(`${ngrokUrl}/get_fm_en_ipfs`, {
-            const response = await fetch(`https://7592-35-185-215-255.ngrok-free.app/get_fm_en_ipfs`, {
+            const response = await fetch(`https://116a-35-221-244-230.ngrok-free.app/get_fm_en_ipfs`, {
                 method: 'POST',
                 body: formData,
                 headers: {}
@@ -100,6 +100,7 @@ const UploadImageForm = (props) => {
                 alert('Error: ' + error.message);
             }
             console.log(`Time taken by handleSubmit: ${new Date() - startTime} ms`);
+            alert('Block created successfully');
         } catch (error) {
             console.error('Error:', error);
         } finally {
