@@ -1,4 +1,4 @@
-import MyImage from "@/components/my-image/MyImage";
+import MyImage from "@/components/my-image/my_image";
 import { cookies } from "next/headers";
 import { redirect } from 'next/navigation';
 import jwt from 'jsonwebtoken';

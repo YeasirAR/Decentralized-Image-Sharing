@@ -35,7 +35,16 @@ const organizationSchema = new mongoose.Schema({
         type: String,
         recuired: true,
     },
-    
+    total_images: {
+        type: Number,
+        recuired: false,
+        default: 0,
+    },
+    role: {
+        type: String,
+        recuired: false,
+        default: "org",
+    },
 });
 
 const Organization = mongoose.models.organization||
