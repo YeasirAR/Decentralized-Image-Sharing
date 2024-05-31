@@ -71,7 +71,8 @@ def getClientsBlocks():
                 'timestamp': block.timestamp,
                 'previous_hash': block.previous_hash,
                 'owner_org': block.owner_org,
-                'clients': block.clients
+                'clients': block.clients,
+                'hash': block.hash
             }
             for block in blockchain.chain
             if client in block.clients and smartcontract.check_contract(block.block_id, client)
@@ -93,7 +94,8 @@ def getOwnBlock():
                 'timestamp': block.timestamp,
                 'previous_hash': block.previous_hash,
                 'owner_org': block.owner_org,
-                'clients': block.clients
+                'clients': block.clients,
+                'hash': block.hash
             }
             for block in blockchain.chain
             if client == block.owner_org and smartcontract.check_owner_contract(block.block_id, client)

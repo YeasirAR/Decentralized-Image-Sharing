@@ -47,7 +47,7 @@ const ShareImage = (props) => {
     setLoadingBlockId(blockId);
     try {
       const res = await fetch(
-        "https://519a-35-221-136-122.ngrok-free.app/get_decrypted_image",
+        "https://e84d-34-168-222-190.ngrok-free.app/get_decrypted_image",
         {
           method: "POST",
           headers: {
@@ -83,10 +83,11 @@ const ShareImage = (props) => {
       <div>
         {clientBlocks.map((block) => (
           <div key={block.block_id} className="grid grid-cols-2 gap-2">
-            <div className="w-[130vh] p-4 mx-auto my-3 text-left bg-white border border-gray-200 shadow-lg shadow-purple-500/50 rounded-lg shadow sm:p-8">
-              <h5 className="mb-2 text-3xl font-bold text-gray-900">Image Name</h5>
-              <h3 className="mb-2 text-3xl font-bold text-gray-900">Block Id : {block.block_id}</h3>
-              <p className="mb-5 text-base text-gray-900 sm:text-lg">
+            <div className="w-[130vh] p-4 mx-auto my-3 text-left bg-white border border-gray-200 shadow-lg shadow-purple-500/50 rounded-lg shadow px-8 py-4">
+              {/* <h5 className="mb-2 text-3xl font-bold text-gray-900">Image Name</h5> */}
+              <h3 className="mb-1 text-lg font-bold text-gray-900">Block Id : {block.block_id}</h3>
+              <p className="mb-1 text-xs text-gray-900">Block hash: {block.hash}</p>
+              <p className="mb-5 text-base text-gray-900 ">
                 Owner: <br />
                 {block.clients.map((c) => (
                   <button
