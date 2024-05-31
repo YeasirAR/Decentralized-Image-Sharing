@@ -13,12 +13,12 @@ const ShareImagePage = () => {
       decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     } catch (error) {
       console.error("Invalid or expired token:", error);
-      //   return redirect('/auth/login');
+        return redirect('/auth/login');
     }
   }
 
   if (!decodedToken) {
-    // return redirect('/auth/login');
+    return redirect('/auth/login');
   }
   return (
     <>
