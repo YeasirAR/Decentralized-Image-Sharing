@@ -35,9 +35,10 @@ const MyImage = ({ user_email }) => {
   }, [user_email]);
 
   const showImage = async (blockId, ipfs_hash, encryption_key) => {
+    const startTime = new Date();
     setLoadingBlockId(blockId);
     try {
-      const res = await fetch("https://35cd-35-185-215-255.ngrok-free.app/get_decrypted_image", {
+      const res = await fetch("https://7592-35-185-215-255.ngrok-free.app/get_decrypted_image", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +57,7 @@ const MyImage = ({ user_email }) => {
       if (data.error) {
         throw new Error(data.error);
       }
-
+      console.log(`Time taken by get_decrypted_image: ${new Date() - startTime} ms`);
       setImageSrc(`data:image/jpeg;base64,${data.decrypted_image}`);
       setShowModal(true);
     } catch (error) {

@@ -17,6 +17,7 @@ const UploadImageForm = (props) => {
     };
 
     const handleSubmit = async (e) => {
+        const startTime = new Date();
         e.preventDefault();
         if (!selectedFile) {
             alert("Please select a file.");
@@ -30,7 +31,7 @@ const UploadImageForm = (props) => {
 
         try {
             // const response = await fetch(`${ngrokUrl}/get_fm_en_ipfs`, {
-            const response = await fetch(`https://35cd-35-185-215-255.ngrok-free.app/get_fm_en_ipfs`, {
+            const response = await fetch(`https://7592-35-185-215-255.ngrok-free.app/get_fm_en_ipfs`, {
                 method: 'POST',
                 body: formData,
                 headers: {}
@@ -41,14 +42,16 @@ const UploadImageForm = (props) => {
             }
 
             const data = await response.json();
-            console.log('Success:', data);
-            console.log(JSON.stringify(data.feature_map));
-            console.log(data.encryption_key);
-            console.log(data.ipfs_hash);
-            console.log(clientId);
-            console.log(user_email);
+            console.log(`Time taken by get_fm_en_ipfs: ${new Date() - startTime} ms`);
+            // console.log('Success:', data);
+            // console.log(JSON.stringify(data.feature_map));
+            // console.log(data.encryption_key);
+            // console.log(data.ipfs_hash);
+            // console.log(clientId);
+            // console.log(user_email);
 
             try {
+                const startTime2 = new Date();
                 const res = await fetch('http://127.0.0.1:5000/api/insertEncrKeyIpfs', {
                     method: 'POST',
                     body: JSON.stringify({
@@ -66,8 +69,10 @@ const UploadImageForm = (props) => {
                     throw new Error('Network response was not ok');
                 }
                 const resData = await res.json();
-                console.log('Success:', resData);
+                // console.log('Success:', resData);
+                console.log(`Time taken by insertEncrKeyIpfs: ${new Date() - startTime2} ms`);
                 try {
+                    const startTime3 = new Date();
                     const res = await fetch('/api/update/org_count', {
                         method: 'POST',
                         body: JSON.stringify({
@@ -81,19 +86,20 @@ const UploadImageForm = (props) => {
                         throw new Error('Network response was not ok');
                     }
                     const resData = await res.json();
-                    console.log('Success:', resData); 
+                    // console.log('Success:', resData); 
+                    console.log(`Time taken by org_count: ${new Date() - startTime3} ms`);
                 
                 } catch (error) {
                     console.error('Error:', error);
                     alert('Error: ' + error.message);
                 }
-                alert('Block created successfully');  
+                // alert('Block created successfully');  
                 
             } catch (error) {
                 console.error('Error:', error);
                 alert('Error: ' + error.message);
             }
-
+            console.log(`Time taken by handleSubmit: ${new Date() - startTime} ms`);
         } catch (error) {
             console.error('Error:', error);
         } finally {
