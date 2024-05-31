@@ -28,6 +28,7 @@ import {
 
 const navigation = [
   { name: "User Profile", href: "/dashboard", icon: HomeIcon, current: false },
+  { name: "Edit Profile", href: "/edit-profile", icon: HomeIcon, current: false },
   { name: "Add Clients", href: "/add-clients", icon: ArrowTrendingUpIcon, current: false },
   { name: "Upload Image", href: "/upload-image", icon: UserGroupIcon, current: false },
   { name: "Share Image", href: "/share-image", icon: UserGroupIcon, current: false },

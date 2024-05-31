@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 
 export async function POST(request) {
-  const { name, email, country, street_address, reg_no, password,description } =
+  const { name, email, country, street_address, reg_no, password,profile_image,description } =
     await request.json();
   await connectMongoDB();
   const existingUser = await OrgrSchema.findOne({
@@ -22,6 +22,7 @@ export async function POST(request) {
     street_address,
     reg_no,
     description,
+    profile_image,
     password: await bcrypt.hash(password, 10)
   });
   await newUser.save();

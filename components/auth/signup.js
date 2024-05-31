@@ -2,8 +2,11 @@
 import Link from "next/link";
 // import logo from "../../public/images/logo.png";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Signup() {
+  const [profilePic, setProfilePic] = useState(null);
+
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -12,6 +15,20 @@ export default function Signup() {
       alert("Password and confirm password does not match");
       return;
     }
+    const data_img = new FormData();
+    data_img.append("file", profilePic);
+    data_img.append("upload_preset", "ac0fxlck");
+    data_img.append("cloud_name", "duhwlswgx");
+    const res_img = await fetch(
+      "https://api.cloudinary.com/v1_1/duhwlswgx/image/upload",
+      {
+        method: "POST",
+        body: data_img,
+      }
+    );
+    const file = await res_img.json();
+    console.log(file.secure_url);
+    const imageUrl = file.secure_url || "";
     const res = await fetch("/api/auth/signup/org", {
       method: "POST",
       headers: {
@@ -24,6 +41,7 @@ export default function Signup() {
         street_address: e.target.street_address.value,
         reg_no: e.target.reg_no.value,
         password: e.target.password.value,
+        profile_image: imageUrl,
         description: e.target.description.value,
       }),
     });
@@ -127,6 +145,20 @@ export default function Signup() {
                       required
                       className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                    Profile Image
+                  </label>
+                  <div className="mt-1">
+                    
+                  <input
+            type="file"
+            id="profilePic"
+            onChange={(event) => setProfilePic(event.target.files[0])}
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          /> 
                   </div>
                 </div>
                 <div>
