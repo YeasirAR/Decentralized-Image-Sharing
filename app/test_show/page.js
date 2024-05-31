@@ -9,7 +9,7 @@ const MyImagePage = () => {
   const handleShow = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch("https://318a-35-194-182-203.ngrok-free.app/get_decrypted_image", {
+      const res = await fetch("https://519a-35-221-136-122.ngrok-free.app/get_decrypted_image", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

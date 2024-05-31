@@ -1,6 +1,6 @@
 import React from 'react';
 import { Inter } from 'next/font/google';
-import AddImageForm from '@/components/add-image-form/add-image-form';
+import AddImageForm from '@/components/upload-image-form/upload-image-form';
 import NewClientForm from '@/components/new-client-form/new-client-form';
 import {
   ChatBubbleLeftEllipsisIcon,

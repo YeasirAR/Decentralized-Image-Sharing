@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 const MyImage = (props) => {
-  const { owner_org } = props;
+  const { user_email } = props;
   const [clientBlocks, setClientBlocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,7 +15,7 @@ const MyImage = (props) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            client: owner_org,
+            client: user_email,
           }),
         });
         if (!response.ok) {
