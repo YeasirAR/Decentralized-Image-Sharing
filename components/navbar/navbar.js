@@ -12,9 +12,7 @@ const user = {
   imageUrl:
     'https://miro.medium.com/v2/resize:fit:2400/1*edHEjIkFn5YuPODO7wKOYw.png',
 }
-const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-]
+
 const userNavigation = [
   { name: 'Sign out', href: '#' },
 ]
@@ -24,6 +22,25 @@ function classNames(...classes) {
 }
 const NavBar = (props) => {
   const {name, email, profile_image, role} = props;
+  const navigation = []
+  if (role === "org") {
+    navigation.push(
+    { name: "Dashboard", href: "/dashboard", current: false },
+    { name: "Edit Profile", href: "/edit-profile", current: false },
+    { name: "Upload Image", href: "/upload-image", current: false },
+    { name: "Shared Images", href: "/shared-images", current: false },
+    { name: "My Images", href: "/my-images", current: false },
+    { name: "Transactions", href: "/transactions", current: false },
+    )
+  }
+  else {
+    navigation.push(
+    { name: "Dashboard", href: "/dashboard", current: false },
+    { name: "Edit Profile", href: "/edit-profile", current: false },
+    { name: "Shared Images", href: "/shared-images", current: false },
+    { name: "Transactions", href: "/transactions", current: false },
+    )
+  }
 
   const logout = async () => {
     const res = await fetch("/api/auth/logout", {

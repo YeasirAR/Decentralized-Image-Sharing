@@ -1,8 +1,9 @@
-import UploadImage from "@/components/upload-image-form/upload-image-form";
+import MyImage from "@/components/my-image/my_image";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import jwt from "jsonwebtoken";
-const UploadImagePage = () => {
+
+const MyImagePage = () => {
   const cookieStore = cookies();
   const token = cookieStore.get("token")?.value;
   const blockchain_backend = process.env.NEXT_PUBLIC_BLOCKCHAIN_BACKEND;
@@ -20,9 +21,10 @@ const UploadImagePage = () => {
   if (!decodedToken) {
     return redirect("/auth/login");
   }
+
   return (
     <>
-      <UploadImage
+      <MyImage
         user_email={decodedToken?.email || ""}
         blockchain_backend={blockchain_backend}
         ml_backend={ml_backend}
@@ -30,4 +32,5 @@ const UploadImagePage = () => {
     </>
   );
 };
-export default UploadImagePage;
+
+export default MyImagePage;

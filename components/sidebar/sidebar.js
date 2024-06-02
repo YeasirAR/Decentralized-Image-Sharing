@@ -28,6 +28,7 @@ import {
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import jwt from "jsonwebtoken";
+import { InfoOutlined } from '@mui/icons-material';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -56,20 +57,20 @@ const navigation = [
 ];
 if (role === "org") {
   navigation.push(
-    { name: "User Profile", href: "/dashboard", icon: HomeIcon, current: false },
-    { name: "Edit Profile", href: "/edit-profile", icon: HomeIcon, current: false },
-    { name: "Add Clients", href: "/add-clients", icon: ArrowTrendingUpIcon, current: false },
+    { name: "Dashboard", href: "/dashboard", icon: HomeIcon, current: false },
+    { name: "Edit Profile", href: "/edit-profile", icon: InfoOutlined, current: false },
+    { name: "Add Clients", href: "/add-clients", icon: PlusIcon, current: false },
     { name: "Upload Image", href: "/upload-image", icon: UserGroupIcon, current: false },
-    { name: "Shared Images", href: "/share-image", icon: UserGroupIcon, current: false },
-    { name: "My Images", href: "/my-image", icon: InformationCircleIcon, current: false },
+    { name: "Shared Images", href: "/shared-images", icon: ShareIcon, current: false },
+    { name: "My Images", href: "/my-images", icon: StarIcon, current: false },
     { name: 'Transactions', href: '/transactions', icon: Bars3Icon, current: false },
   );
 }
 else {
   navigation.push(
-    { name: "User Profile", href: "/dashboard", icon: HomeIcon, current: false },
-    { name: "Edit Profile", href: "/edit-profile", icon: ArrowTrendingUpIcon, current: false },
-    { name: "Shared Image", href: "/share-image", icon: UserGroupIcon, current: false },
+    { name: "Dashboard", href: "/dashboard", icon: HomeIcon, current: false },
+    { name: "Edit Profile", href: "/edit-profile", icon: InfoOutlined, current: false },
+    { name: "Shared Image", href: "/shared-images", icon: ShareIcon, current: false },
     { name: 'Transactions', href: '/transactions', icon: Bars3Icon, current: false },
   );
 }

@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 
 const UploadImageForm = (props) => {
-    const { user_email } = props;
+    const { user_email, blockchain_backend, ml_backend } = props;
     const [selectedFile, setSelectedFile] = useState(null);
     const [clientId, setClientId] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const ngrokUrl = process.env.NGROK;
+    const [loadingSteps, setLoadingSteps] = useState("");
 
     const handleFileChange = (e) => {
         setSelectedFile(e.target.files[0]);
@@ -25,13 +25,13 @@ const UploadImageForm = (props) => {
         }
 
         setIsLoading(true);
+        setLoadingSteps("Extracting features from image...\nEncrypting image using AES256...\nUploading encrypted image to IPFS...");
 
         const formData = new FormData();
         formData.append('file', selectedFile);
 
         try {
-            // const response = await fetch(`${ngrokUrl}/get_fm_en_ipfs`, {
-            const response = await fetch(`https://116a-35-221-244-230.ngrok-free.app/get_fm_en_ipfs`, {
+            const response = await fetch(`${ml_backend}/get_fm_en_ipfs`, {
                 method: 'POST',
                 body: formData,
                 headers: {}
@@ -43,16 +43,12 @@ const UploadImageForm = (props) => {
 
             const data = await response.json();
             console.log(`Time taken by get_fm_en_ipfs: ${new Date() - startTime} ms`);
-            // console.log('Success:', data);
-            // console.log(JSON.stringify(data.feature_map));
-            // console.log(data.encryption_key);
-            // console.log(data.ipfs_hash);
-            // console.log(clientId);
-            // console.log(user_email);
 
             try {
                 const startTime2 = new Date();
-                const res = await fetch('http://127.0.0.1:5000/api/insertEncrKeyIpfs', {
+                setLoadingSteps("Uploading feature_map encryption_key and IPFS_hash to blockchain...");
+
+                const res = await fetch(`${blockchain_backend}/api/insertEncrKeyIpfs`, {
                     method: 'POST',
                     body: JSON.stringify({
                         owner: user_email,
@@ -69,8 +65,8 @@ const UploadImageForm = (props) => {
                     throw new Error('Network response was not ok');
                 }
                 const resData = await res.json();
-                // console.log('Success:', resData);
                 console.log(`Time taken by insertEncrKeyIpfs: ${new Date() - startTime2} ms`);
+
                 try {
                     const startTime3 = new Date();
                     const res = await fetch('/api/update/org_count', {
@@ -86,20 +82,19 @@ const UploadImageForm = (props) => {
                         throw new Error('Network response was not ok');
                     }
                     const resData = await res.json();
-                    // console.log('Success:', resData); 
                     console.log(`Time taken by org_count: ${new Date() - startTime3} ms`);
-                
+
                 } catch (error) {
                     console.error('Error:', error);
                     alert('Error: ' + error.message);
                 }
-                // alert('Block created successfully');  
-                
+
             } catch (error) {
                 console.error('Error:', error);
                 alert('Error: ' + error.message);
             }
-            console.log(`Time taken by handleSubmit: ${new Date() - startTime} ms`);
+
+            console.log(`Total time taken by handleSubmit: ${new Date() - startTime} ms`);
             alert('Block created successfully');
         } catch (error) {
             console.error('Error:', error);
@@ -164,8 +159,9 @@ const UploadImageForm = (props) => {
                     </button>
                 </div>
                 {isLoading && (
-                    <div className="flex justify-center mt-4">
-                        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-gray-900"></div>
+                    <div className="flex flex-col items-center mt-4">
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-gray-900 mb-2"></div>
+                        <div className="text-sm text-gray-600 whitespace-pre-line">{loadingSteps}</div>
                     </div>
                 )}
             </form>

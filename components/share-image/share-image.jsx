@@ -1,18 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
 
-const ShareImage = ({ user_email }) => {
+const ShareImage = ({ user_email, blockchain_backend, ml_backend }) => {
   const [clientBlocks, setClientBlocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [imageSrc, setImageSrc] = useState("");
   const [loadingBlockId, setLoadingBlockId] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [loadingSteps, setLoadingSteps] = useState("");
 
   useEffect(() => {
     const fetchClientBlocks = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/api/getClientsBlocks", {
+        const response = await fetch(`${blockchain_backend}/api/getClientsBlocks`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -34,8 +35,9 @@ const ShareImage = ({ user_email }) => {
 
   const showImage = async (blockId, ipfs_hash, encryption_key, feature_map) => {
     setLoadingBlockId(blockId);
+    setLoadingSteps("Fetching Encrypted image from IPFS...");
     try {
-      const res = await fetch("https://116a-35-221-244-230.ngrok-free.app/get_decrypted_image", {
+      const res = await fetch(`${ml_backend}/get_decrypted_image`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,12 +48,18 @@ const ShareImage = ({ user_email }) => {
         }),
       });
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+      setLoadingSteps("Decrypting image using AES256...");
       const data = await res.json();
       if (data.error) throw new Error(data.error);
+
+      setLoadingSteps("Verifying image integrity using feature map...");
+
       setImageSrc(`data:image/jpeg;base64,${data.decrypted_image}`);
       setShowModal(true);
     } catch (error) {
       console.error("Error fetching decrypted image:", error);
+      setLoadingSteps("Error fetching decrypted image");
     } finally {
       setLoadingBlockId(null);
     }
@@ -65,7 +73,7 @@ const ShareImage = ({ user_email }) => {
       {clientBlocks.map((block) => (
         <div key={block.block_id} className="bg-white border border-gray-200 rounded-lg shadow-md my-4 p-6 transition transform">
           <div className="mb-4">
-          <h5 className="text-lg font-bold text-gray-800">Block Informations</h5>
+            <h5 className="text-lg font-bold text-gray-800">Block Information</h5>
             <p className="text-sm text-gray-600"><b>Block Id:</b> {block.block_id}</p>
             <p className="text-sm text-gray-600"><b>Block Owner:</b> {block.owner_org}</p>
             <p className="text-sm text-gray-600"><b>Block Hash:</b> {block.hash}</p>
@@ -92,7 +100,12 @@ const ShareImage = ({ user_email }) => {
             >
               View Image
             </button>
-            {loadingBlockId === block.block_id && <div className="text-sm text-gray-600">Loading...</div>}
+            {loadingBlockId === block.block_id && (
+              <div className="flex items-center">
+                <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-6 w-6 mr-2"></div>
+                <div className="text-sm text-gray-600 whitespace-pre-line">{loadingSteps}</div>
+              </div>
+            )}
           </div>
         </div>
       ))}
