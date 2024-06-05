@@ -96,6 +96,8 @@ const UploadImageForm = (props) => {
 
             console.log(`Total time taken by handleSubmit: ${new Date() - startTime} ms`);
             alert('Block created successfully');
+            setSelectedFile(null);
+            setClientId('');
         } catch (error) {
             console.error('Error:', error);
         } finally {

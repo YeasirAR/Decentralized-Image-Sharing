@@ -70,7 +70,7 @@ else {
   navigation.push(
     { name: "Dashboard", href: "/dashboard", icon: HomeIcon, current: false },
     { name: "Edit Profile", href: "/edit-profile", icon: InfoOutlined, current: false },
-    { name: "Shared Image", href: "/shared-images", icon: ShareIcon, current: false },
+    { name: "Shared Images", href: "/shared-images", icon: ShareIcon, current: false },
     { name: 'Transactions', href: '/transactions', icon: Bars3Icon, current: false },
   );
 }
