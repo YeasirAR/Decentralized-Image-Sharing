@@ -55,6 +55,7 @@ const UploadImageForm = (props) => {
                         encryption_key: data.encryption_key,
                         feature_map: JSON.stringify(data.feature_map),
                         ipfs_hash: data.ipfs_hash,
+                        data:"Image",
                         clients: clientId,
                     }),
                     headers: {

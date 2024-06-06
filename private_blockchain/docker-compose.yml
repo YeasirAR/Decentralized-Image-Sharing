@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  blockchain:
+    build: .
+    container_name: blockchain_service
+    ports:
+      - "5000:5000"
+    volumes:
+      - blockchain_data:/app/blockchain
+    networks:
+      - app-network
+
+volumes:
+  blockchain_data:
+
+networks:
+  app-network:
+    driver: bridge

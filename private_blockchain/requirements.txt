@@ -1,0 +1,6 @@
+Flask
+Flask-Cors
+cryptography
+requests
+ipfshttpclient
+pytest
